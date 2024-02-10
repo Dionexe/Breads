@@ -10,7 +10,7 @@ const methodOverride = require('method-override')
 
 // MIDDLEWARE
 app.use(methodOverride('_method'))
-app.use (express.static)
+app.use (express.static('public'))
 app.use(express.urlencoded({extended: true}))
 
 

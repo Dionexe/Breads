@@ -13,10 +13,13 @@ router.get("/new", (req, res) => {
   res.send(render("new"));
 });
 
-router.get("/:arrayIndex", (req, res) => {
-  res.send(render("Show", { bread: Bread[req.params.arrayIndex] }));
-  // res.send(render)
-});
+// EDIT
+router.get('/:indexArray/edit', (req, res) => {
+  res.send (render('Edit', {
+    bread: Bread[req.params.indexArray],
+    index: req.params.indexArray
+  }))
+})
 
 // SHOW
 router.get('/:arrayIndex', (req, res) => {
@@ -44,6 +47,19 @@ router.post("/", (req, res) => {
   Bread.push(req.body);
   res.redirect("/breads");
 });
+
+// UPDATE
+router.put('/:arrayIndex', (req, res) => {
+  if(req.body.hasGluten === 'on'){
+    req.body.hasGluten = true
+  } else {
+    req.body.hasGluten = false
+  }
+  Bread[req.params.arrayIndex] = req.body
+  res.redirect(`/breads/${req.params.arrayIndex}`)
+})
+
+
 
 // DELETE
 router.delete("/:indexArray", (req, res) => {
