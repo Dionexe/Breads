@@ -1,9 +1,22 @@
 const express = require('express');
+const mongoose = require('mongoose')
 const app = express();
 
 // CONFIG
 require('dotenv').config();
 const PORT = process.env.PORT;
+const MONGO_URI = process.env.MONGO_URI;
+
+//Database
+mongoose
+    .connect(MONGO_URI)
+    .then(() => {
+        console.log('connected to mongo: ' + MONGO_URI);
+    })
+    .catch((err) => {
+        console.log('Error connecting to mongo: ' + err);
+    });
+
 
 // DEPENDENCIES
 const methodOverride = require('method-override')

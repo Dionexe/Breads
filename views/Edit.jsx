@@ -35,4 +35,4 @@ function Edit ({bread, index}) {
     )
 }
 
-module.export = Edit;
+module.exports = Edit;
