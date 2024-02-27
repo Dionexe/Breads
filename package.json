@@ -1,9 +1,9 @@
 {
-  "name": "bread-crud-24",
+  "name": "Breads",
   "version": "1.0.0",
   "engines": {
     "node": "18.x"
-  }
+  },
   "description": "An example CRUD app for bread",
   "main": "index.js",
   "scripts": {
