@@ -8,7 +8,7 @@ const Baker = require('../models/baker.js');
 router.get('/', async (req, res) => {
   const foundBakers = await Baker.find().lean() 
   const foundBreads = await Bread.find().limit(6).lean() 
-  res.send(render('index', {
+  res.send(render('Index', {
     breads: foundBreads,
     bakers: foundBakers,
     title: 'Index Page'
@@ -20,7 +20,7 @@ router.get('/', async (req, res) => {
 router.get('/new', (req, res) => {
   Baker.find()
       .then(foundBakers => {
-          res.send(render('new', {
+          res.send(render('New', {
               bakers: foundBakers
           }))
     })
@@ -35,7 +35,7 @@ router.get("/:id", (req, res) => {
       const bakedBy = foundBread.getBakedBy()
       console.log(bakedBy)
       res.send(
-        render("show", {
+        render("Show", {
           bread: foundBread,
         })
       );
@@ -80,7 +80,7 @@ router.get("/:id/edit", (req, res) => {
     .then(foundBakers => {
         Bread.findById(req.params.id)
           .then(foundBread => {
-            res.send(render('edit', {
+            res.send(render('Edit', {
                 bread: foundBread, 
                 bakers: foundBakers 
         })
