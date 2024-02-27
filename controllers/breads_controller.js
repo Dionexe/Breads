@@ -2,27 +2,35 @@ const express = require("express");
 const router = express.Router();
 const Bread = require("../models/bread");
 const render = require("../render");
+const Baker = require('../models/baker.js');
 
 // Breads Routes
-router.get("/", (req, res) => {
-  Bread.find().then((foundBreads) => {
-    res.send(
-      render("index", {
-        breads: foundBreads,
-        title: "Index Page",
-      })
-    );
-  });
-});
+router.get('/', async (req, res) => {
+  const foundBakers = await Baker.find().lean() 
+  const foundBreads = await Bread.find().limit(6).lean() 
+  res.send(render('index', {
+    breads: foundBreads,
+    bakers: foundBakers,
+    title: 'Index Page'
+  }))
+})
+
 
 // NEW
-router.get("/new", (req, res) => {
-  res.send(render("new"));
-});
+router.get('/new', (req, res) => {
+  Baker.find()
+      .then(foundBakers => {
+          res.send(render('new', {
+              bakers: foundBakers
+          }))
+    })
+})
+
 
 // DETAIL ROUTE
 router.get("/:id", (req, res) => {
   Bread.findById(req.params.id)
+    .populate('baker')
     .then((foundBread) => {
       const bakedBy = foundBread.getBakedBy()
       console.log(bakedBy)
@@ -68,14 +76,17 @@ router.put("/:id", (req, res) => {
 
 // EDIT
 router.get("/:id/edit", (req, res) => {
-  Bread.findById(req.params.id)
-    .then((foundBread) => {
-      res.send(
-        render("edit", {
-          bread: foundBread,
+  Baker.find()
+    .then(foundBakers => {
+        Bread.findById(req.params.id)
+          .then(foundBread => {
+            res.send(render('edit', {
+                bread: foundBread, 
+                bakers: foundBakers 
         })
       );
     })
+  })
     .catch((err) => {
       res.send("404");
     });
