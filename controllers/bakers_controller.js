@@ -27,9 +27,9 @@ baker.get('/:id', (req, res) => {
             options: { limit: 2 }
         })
         .then(foundBaker => {
-            res.render('bakerShow', {
+            res.send(render('bakerShow', {
                 baker: foundBaker
-            })
+            }))
         })
 })
 
